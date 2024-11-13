@@ -30,7 +30,6 @@ export function Faucet({ address }: { address: `0x${string}` }) {
       address: FAUCET_ADDRESS,
       abi: Abi,
       functionName: "requestTokens",
-      args: [],
     });
   };
 
