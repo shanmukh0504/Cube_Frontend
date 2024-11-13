@@ -35,7 +35,7 @@ export function Approve() {
     const formData = new FormData(e.target as HTMLFormElement);
     const spender = formData.get("spender") as `0x${string}`;
     const amount = formData.get("amount") as string;
-    const amountInEther = parseFloat(amount) / Math.pow(10, 18);
+    const amountInEther = parseFloat(amount);
 
     writeContract({
       address: CONTRACT_ADDRESS,

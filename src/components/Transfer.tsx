@@ -38,7 +38,7 @@ export function Transfer() {
     const formData = new FormData(e.target as HTMLFormElement);
     const to = formData.get("to") as `0x${string}`;
     const amount = formData.get("amount") as string;
-    const amountInEtherStr = (parseFloat(amount) / 1e18).toFixed(18);
+    const amountInEtherStr = (parseFloat(amount)).toFixed(18);
 
     writeContract({
       address: CONTRACT_ADDRESS,

@@ -22,7 +22,7 @@ export function TransferFrom() {
         const from = formData.get("from") as `0x${string}`;
         const to = formData.get("to") as `0x${string}`;
         const amount = formData.get("amount") as string;
-        const amountInEtherStr = (parseFloat(amount) / 1e18).toFixed(18);
+        const amountInEtherStr = (parseFloat(amount)).toFixed(18);
 
         writeContract({
             address: CONTRACT_ADDRESS,
