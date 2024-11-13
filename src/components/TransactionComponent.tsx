@@ -1,6 +1,5 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { formatUnits } from "ethers";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { Chain, MatchedOrder } from "@gardenfi/orderbook";
@@ -98,8 +97,8 @@ const OrderComponent: React.FC<Order> = ({ order, status }) => {
 
   const { source_swap, destination_swap } = order;
 
-  const wbtcAmount = formatUnits(source_swap.amount, 8);
-  const btcAmount = formatUnits(destination_swap.amount, 8);
+  const wbtcAmount = source_swap.amount;
+  const btcAmount = destination_swap.amount;
   const fromLabel = source_swap.asset.toLowerCase() === "btc" ? "BTC" : "WBTC";
   const toLabel = fromLabel === "BTC" ? "WBTC" : "BTC";
   const userFriendlyStatus = status ? getUserFriendlyStatus(status) : StatusLabel.Pending;

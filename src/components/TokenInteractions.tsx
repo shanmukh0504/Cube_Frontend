@@ -13,6 +13,9 @@ import { TransactionHistory } from "./Transactions";
 import SwapComponent from "./SwapComponent";
 import TransactionsComponent from "./TransactionComponent";
 import { ChevronRightIcon } from "@heroicons/react/solid";
+import { IncreaseAllowance } from "./IncreaseAllowance";
+import { DecreaseAllowance } from "./DecreaseAllowance";
+import { Faucet } from "./Faucet";
 
 interface TokenInteractionsProps {
   address: `0x${string}`;
@@ -142,6 +145,18 @@ const TokenInteractions = ({ address }: TokenInteractionsProps) => {
               >
                 Burn
               </button>
+              <button
+        className="w-[200px] p-2 rounded-lg bg-gradient-button transform transition-transform duration-300 hover:scale-105"
+        onClick={() => handleTabClick(<IncreaseAllowance />)}
+      >
+        Increase Allowance
+      </button>
+      <button
+        className="w-[200px] p-2 rounded-lg bg-gradient-button transform transition-transform duration-300 hover:scale-105"
+        onClick={() => handleTabClick(<DecreaseAllowance />)}
+      >
+        Decrease Allowance
+      </button>
             </div>
           )}
         </div>
@@ -170,6 +185,28 @@ const TokenInteractions = ({ address }: TokenInteractionsProps) => {
                 onClick={() => handleTabClick(<TransactionsComponent />)}
               >
                 View Swap Transactions
+              </button>
+            </div>
+          )}
+        </div>
+        {/* Faucet Section (New Section) */}
+        <div
+          onMouseEnter={() => setActiveTab("faucet")}
+          onMouseLeave={() => setActiveTab(null)}
+          className="text-gray-300 relative"
+        >
+          <button className="flex items-center w-[200px] justify-between cursor-pointer p-2 rounded-lg bg-gradient-button transform transition-transform duration-300 hover:scale-105">
+            Faucet
+            <ChevronRightIcon className="w-5 h-5" />
+          </button>
+          {/* Sub-options for "Faucet" */}
+          {activeTab === "faucet" && (
+            <div className="absolute w-auto left-full top-0 text-white p-4 rounded-lg shadow-lg space-y-2">
+              <button
+                className="w-[200px] p-2 rounded-lg bg-gradient-button transform transition-transform duration-300 hover:scale-105"
+                onClick={() => handleTabClick(<Faucet address={address}/>)} // Faucet Request
+              >
+                Request Tokens
               </button>
             </div>
           )}

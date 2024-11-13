@@ -94,7 +94,7 @@ export function ViewAllowance() {
 
             {allowance !== null && (
               <div className="text-center text-lg font-medium">
-                Allowance: {formatEther(allowance * BigInt(10 ** 18))} CBT
+                Allowance: {formatEther(allowance)} CBT
               </div>
             )}
           </form>
