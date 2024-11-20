@@ -115,7 +115,12 @@ const InputField: React.FC<InputFieldProps> = ({
   onChange,
 }) => (
   <div className="space-y-1">
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700">{label}</label>
+    <label
+      htmlFor={id}
+      className="block text-sm font-medium text-white"
+    >
+      {label}
+    </label>
     <Input
       id={id}
       placeholder="0"
@@ -126,6 +131,7 @@ const InputField: React.FC<InputFieldProps> = ({
     />
   </div>
 );
+
 
 const Swap: React.FC<SwapAndAddressComponentProps> = ({
   swapParams,
@@ -195,7 +201,7 @@ const Swap: React.FC<SwapAndAddressComponentProps> = ({
   return (
     <div className="space-y-4">
       <div>
-        <label htmlFor="receive-address" className="block text-sm font-medium text-gray-700">Receive Address</label>
+        <label htmlFor="receive-address" className="block text-sm font-medium text-white">Receive Address</label>
         <Input
           id="receive-address"
           placeholder="Enter BTC Address"

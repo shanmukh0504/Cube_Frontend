@@ -97,8 +97,8 @@ const OrderComponent: React.FC<Order> = ({ order, status }) => {
 
   const { source_swap, destination_swap } = order;
 
-  const wbtcAmount = source_swap.amount;
-  const btcAmount = destination_swap.amount;
+  const wbtcAmount = source_swap.amount ? Number(source_swap.amount) / 10 ** 8 : 0;
+  const btcAmount = destination_swap.amount ? Number(destination_swap.amount) / 10 ** 8 : 0;  
   const fromLabel = source_swap.asset.toLowerCase() === "btc" ? "BTC" : "WBTC";
   const toLabel = fromLabel === "BTC" ? "WBTC" : "BTC";
   const userFriendlyStatus = status ? getUserFriendlyStatus(status) : StatusLabel.Pending;
