@@ -10,7 +10,7 @@ import { Abi, CONTRACT_ADDRESS } from "@/Abi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { buttonVariants, cardVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 
 export function Approve() {
   const [address, setAddress] = useState("");
@@ -47,7 +47,7 @@ export function Approve() {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Approve Spender</CardTitle>
         </CardHeader>
@@ -71,7 +71,6 @@ export function Approve() {
             />
 
             <motion.div
-              variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
             >

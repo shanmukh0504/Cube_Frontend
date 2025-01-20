@@ -3,11 +3,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
-import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { buttonVariants, cardVariants } from "../utils/animations";
-import { useAccount } from 'wagmi';
-import { Asset, SupportedAssets } from '@gardenfi/orderbook';
+import { cardVariants } from "../utils/animations";
+import { useAccount } from "wagmi";
+import { Asset, SupportedAssets } from "@gardenfi/orderbook";
 import { useGarden } from "@gardenfi/react-hooks";
 import { useEVMWallet } from "../hooks/useEVMWallet";
 
@@ -18,29 +17,42 @@ type SwapAndAddressComponentProps = {
     inputAmount: number;
     outputAmount: number;
     btcAddress: string;
-  },
+  };
 };
 
 type SwapAmountComponentProps = {
   inAmount: string;
   outAmount: string;
   changeAmount: (value: string) => void;
+  errorMessage: string | null;
 };
 
 const SwapComponent: React.FC = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [swapParams, setSwapParams] = useState({
     inputToken: SupportedAssets.testnet.ethereum_sepolia_0x3c6a17b8cd92976d1d91e491c93c98cd81998265,
     outputToken: SupportedAssets.testnet.bitcoin_testnet_primary,
     inputAmount: 0.1,
     outputAmount: 0.098,
-    btcAddress: '',
+    btcAddress: "",
   });
 
   const { getQuote } = useGarden();
 
   const handleInputChange = async (value: string) => {
     const amount = Number(value);
-    if (isNaN(amount) || amount <= 0) return;
+
+    if (isNaN(amount) || amount <= 0) {
+      setErrorMessage("Invalid amount. Please enter a number greater than 0.");
+      return;
+    }
+
+    if (amount < 0.01) {
+      setErrorMessage("Amount must be at least 0.01.");
+      return;
+    }
+
+    setErrorMessage(null);
 
     if (!getQuote) return;
 
@@ -65,15 +77,16 @@ const SwapComponent: React.FC = () => {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Token Swap</CardTitle>
         </CardHeader>
         <CardContent>
-          <SwapAmount 
-            inAmount={swapParams.inputAmount.toString()} 
-            outAmount={swapParams.outputAmount.toString()} 
-            changeAmount={handleInputChange} 
+          <SwapAmount
+            inAmount={swapParams.inputAmount.toString()}
+            outAmount={swapParams.outputAmount.toString()}
+            changeAmount={handleInputChange}
+            errorMessage={errorMessage}
           />
           <hr className="my-4" />
           <Swap swapParams={swapParams} />
@@ -87,6 +100,7 @@ const SwapAmount: React.FC<SwapAmountComponentProps> = ({
   inAmount,
   outAmount,
   changeAmount,
+  errorMessage,
 }) => (
   <div className="swap-component-middle-section space-y-4">
     <InputField
@@ -94,6 +108,7 @@ const SwapAmount: React.FC<SwapAmountComponentProps> = ({
       label="Send WBTC"
       value={inAmount}
       onChange={(value) => changeAmount(value)}
+      error={errorMessage}
     />
     <InputField id="btc" label="Receive BTC" value={outAmount} readOnly />
   </div>
@@ -104,6 +119,7 @@ type InputFieldProps = {
   label: string;
   value: string | null;
   readOnly?: boolean;
+  error?: string | null;
   onChange?: (value: string) => void;
 };
 
@@ -112,30 +128,32 @@ const InputField: React.FC<InputFieldProps> = ({
   label,
   value,
   readOnly,
+  error,
   onChange,
 }) => (
   <div className="space-y-1">
-    <label
-      htmlFor={id}
-      className="block text-sm font-medium text-white"
-    >
+    <label htmlFor={id} className="block text-sm font-medium text-white">
       {label}
     </label>
-    <Input
+    <input
       id={id}
       placeholder="0"
-      value={value ? value : ""}
-      type="number"
+      value={value || ""}
+      type="text"
       readOnly={readOnly}
       onChange={(e) => onChange && onChange(e.target.value)}
+      className={`w-full p-2 border rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 ${
+        error ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
+      }`}
+      style={{
+        appearance: "none", // Removes spinners for number inputs
+      }}
     />
+    {error && <p className="text-sm text-red-500">{error}</p>}
   </div>
 );
 
-
-const Swap: React.FC<SwapAndAddressComponentProps> = ({
-  swapParams,
-}) => {
+const Swap: React.FC<SwapAndAddressComponentProps> = ({ swapParams }) => {
   const { address: EvmAddress } = useAccount();
   const [loading, setLoading] = useState(false);
   const { initializeSecretManager, swapAndInitiate, getQuote } = useGarden();
@@ -158,14 +176,15 @@ const Swap: React.FC<SwapAndAddressComponentProps> = ({
       !smRes.val.getMasterPrivKey() ||
       !getQuote ||
       !btcAddress
-    ) return;
+    )
+      return;
 
     setLoading(true);
 
     const quote = await getQuote({
       fromAsset: swapParams.inputToken,
       toAsset: swapParams.outputToken,
-      amount: sendAmount
+      amount: sendAmount,
     });
 
     if (quote.error) {
@@ -201,15 +220,21 @@ const Swap: React.FC<SwapAndAddressComponentProps> = ({
   return (
     <div className="space-y-4">
       <div>
-        <label htmlFor="receive-address" className="block text-sm font-medium text-white">Receive Address</label>
-        <Input
+        <label
+          htmlFor="receive-address"
+          className="block text-sm font-medium text-white"
+        >
+          Receive Address
+        </label>
+        <input
           id="receive-address"
           placeholder="Enter BTC Address"
           value={btcAddress}
           onChange={(e) => setBtcAddress(e.target.value)}
+          className="w-full p-2 border rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
-      <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+      <motion.div whileHover="hover" whileTap="tap">
         <Button
           className="w-full"
           onClick={handleSwap}

@@ -10,7 +10,7 @@ import { Abi, CONTRACT_ADDRESS } from "@/Abi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { buttonVariants, cardVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 import { useState } from "react";
 
 export function Transfer() {
@@ -50,7 +50,7 @@ export function Transfer() {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Transfer Tokens</CardTitle>
         </CardHeader>
@@ -72,7 +72,6 @@ export function Transfer() {
               required
             />
             <motion.div
-              variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
             >

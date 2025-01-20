@@ -8,7 +8,7 @@ import {
 import { Abi, CONTRACT_ADDRESS } from "@/Abi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Button } from "@/ui/button";
-import { buttonVariants, cardVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 
 export function TokenState() {
     const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -32,13 +32,13 @@ export function TokenState() {
 
     return (
         <motion.div variants={cardVariants} initial="hidden" animate="visible">
-            <Card className="w-[500px] overflow-hidden">
+            <Card className="overflow-hidden">
                 <CardHeader>
                     <CardTitle>Token Controls</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                    <div className="flex gap-4">
-                        <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+                    <div className="flex items-center justify-center gap-4">
+                        <motion.div whileHover="hover" whileTap="tap">
                             <Button
                                 onClick={handlePause}
                                 disabled={isPending}
@@ -48,7 +48,7 @@ export function TokenState() {
                                 {isPending ? "Pausing..." : "Pause Token"}
                             </Button>
                         </motion.div>
-                        <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+                        <motion.div whileHover="hover" whileTap="tap">
                             <Button
                                 onClick={handleUnpause}
                                 disabled={isPending}

@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Connector, useConnect } from "wagmi";
+import { useConnect } from "wagmi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Wallet } from "lucide-react";
 import { Button } from "@/ui/button";
 import { motion } from "framer-motion";
-import { cardVariants, buttonVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 
 export function WalletOptions() {
     const { connectors, connect } = useConnect();
@@ -14,7 +14,7 @@ export function WalletOptions() {
             variants={cardVariants}
             initial="hidden"
             animate="visible"
-            className="max-w-3xl min-w-96 mx-auto mt-8"
+            className="max-w-3xl md:min-w-96 mx-auto mt-8"
         >
             <Card>
                 <CardHeader>
@@ -27,11 +27,9 @@ export function WalletOptions() {
                     {connectors.map((connector) => (
                         <motion.div
                             key={connector.id}
-                            variants={buttonVariants}
-                            whileHover="hover"
                             whileTap="tap"
                         >
-                            <Button onClick={() => connect({ connector })} className="w-full bg-gradient-button transform transition-transform duration-300">
+                            <Button onClick={() => connect({ connector })} className="w-full text-white border border-gray-700 shadow-lg bg-gray-800 hover:bg-gray-700">
                                 {connector.name}
                             </Button>
                         </motion.div>

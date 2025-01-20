@@ -38,7 +38,7 @@ export function ViewBalance({ address }: { address: `0x${string}` }) {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Your Token Balance</CardTitle>
         </CardHeader>

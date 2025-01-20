@@ -10,7 +10,7 @@ import { Abi, CONTRACT_ADDRESS } from "@/Abi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { buttonVariants, cardVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 
 export function TransferFrom() {
     const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -34,7 +34,7 @@ export function TransferFrom() {
 
     return (
         <motion.div variants={cardVariants} initial="hidden" animate="visible">
-            <Card className="w-[500px] overflow-hidden">
+            <Card className="overflow-hidden">
                 <CardHeader>
                     <CardTitle>Transfer From</CardTitle>
                 </CardHeader>
@@ -43,7 +43,7 @@ export function TransferFrom() {
                         <Input name="from" placeholder="From Address (0x...)" required />
                         <Input name="to" placeholder="To Address (0x...)" required />
                         <Input name="amount" placeholder="Amount" type="number" step="0.000001" required />
-                        <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+                        <motion.div whileHover="hover" whileTap="tap">
                             <Button disabled={isPending} type="submit" className="w-full">
                                 {isPending ? "Confirming..." : "Transfer From"}
                             </Button>

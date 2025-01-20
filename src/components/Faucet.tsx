@@ -8,7 +8,7 @@ import {
 import { Abi, FAUCET_ADDRESS } from "@/Abi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Button } from "@/ui/button";
-import { buttonVariants, cardVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 import { useState } from "react";
 
 export function Faucet({ address }: { address: `0x${string}` }) {
@@ -35,14 +35,14 @@ export function Faucet({ address }: { address: `0x${string}` }) {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Request Tokens from Faucet</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {inputError && <p className="text-sm text-red-500">{inputError}</p>}
-            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+            <motion.div whileHover="hover" whileTap="tap">
               <Button disabled={isPending} type="submit" className="w-full">
                 {isPending ? "Requesting..." : "Request Tokens"}
               </Button>

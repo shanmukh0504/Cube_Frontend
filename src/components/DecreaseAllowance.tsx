@@ -6,10 +6,9 @@ import { Abi, CONTRACT_ADDRESS } from "@/Abi";
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
-import { buttonVariants, cardVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 import { parseEther } from "viem";
 
-// Helper function to validate Ethereum address format
 const isValidAddress = (address: string): boolean => {
   return /^0x[a-fA-F0-9]{40}$/.test(address);
 };
@@ -24,18 +23,16 @@ export function DecreaseAllowance() {
     e.preventDefault();
     if (!spender || !amount) return;
 
-    // Validate the spender address
     if (!isValidAddress(spender)) {
       setError("Invalid address format. Please enter a valid Ethereum address.");
       return;
     }
 
-    setError(null); // Clear any previous error
+    setError(null);
 
     const amountInEther = parseEther(amount);
 
     try {
-      // Type casting for the spender address to match '0x${string}' format
       await writeContract({
         address: CONTRACT_ADDRESS,
         abi: Abi,
@@ -49,7 +46,7 @@ export function DecreaseAllowance() {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Decrease Allowance</CardTitle>
         </CardHeader>
@@ -73,7 +70,6 @@ export function DecreaseAllowance() {
               required
             />
             <motion.div
-              variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
             >

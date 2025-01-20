@@ -22,10 +22,20 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html lang="en">
-      <body className={`${roboto.className} w-screen overflow-x-hidden`}>
+      <body className={`${roboto.className} w-screen overflow-hidden flex flex-col`}>
         <Providers initialState={initialState}>
           <WalletNavbar />
-          <main className={poppins.className}>{children}</main>
+          <main
+            className={`${poppins.className} flex-1 flex flex-col`}
+            style={{
+              height: "calc(100vh - 4rem)",
+              paddingTop: "4rem",
+              paddingBottom: "1rem",
+              overflowY: "auto",
+            }}
+          >
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

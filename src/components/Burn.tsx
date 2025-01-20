@@ -10,7 +10,7 @@ import { Abi, CONTRACT_ADDRESS } from "@/Abi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { buttonVariants, cardVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 
 export function Burn() {
   const { data: hash, error, isPending, writeContract } = useWriteContract();
@@ -33,7 +33,7 @@ export function Burn() {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Burn Tokens</CardTitle>
         </CardHeader>
@@ -46,7 +46,7 @@ export function Burn() {
               step="0.000001"
               required
             />
-            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+            <motion.div whileHover="hover" whileTap="tap">
               <Button disabled={isPending} type="submit" variant="destructive" className="w-full">
                 {isPending ? "Confirming..." : "Burn"}
               </Button>

@@ -42,7 +42,7 @@ function TransactionsComponent() {
       variants={cardVariants}
       initial="hidden"
       animate="visible"
-      className="h-full w-full overflow-hidden ml-20 pl-4 pb-4"
+      className="h-full w-full overflow-hidden"
     >
       <Card className="w-full h-full overflow-hidden">
         <CardHeader>
@@ -50,7 +50,7 @@ function TransactionsComponent() {
         </CardHeader>
         <CardContent className="h-full overflow-y-auto no-scrollbar">
           {orders.length > 0 ? (
-            <div className="space-y-4 max-h-[500px] overflow-y-auto no-scrollbar">
+            <div className="space-y-4 max-h-[70vh] overflow-y-auto no-scrollbar">
               {orders.map((order) => (
                 <motion.div
                   key={order.created_at}

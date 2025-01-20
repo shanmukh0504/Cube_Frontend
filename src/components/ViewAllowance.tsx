@@ -6,7 +6,7 @@ import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
 import { Abi, CONTRACT_ADDRESS } from "@/Abi";
 import { publicClient } from "@/client";
-import { buttonVariants, cardVariants } from "../utils/animations";
+import { cardVariants } from "../utils/animations";
 
 export function ViewAllowance() {
   const [owner, setOwner] = useState("");
@@ -58,7 +58,7 @@ export function ViewAllowance() {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Check Allowance</CardTitle>
         </CardHeader>
@@ -82,7 +82,7 @@ export function ViewAllowance() {
               <p className="text-sm text-red-500">{inputError}</p>
             )}
 
-            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+            <motion.div whileHover="hover" whileTap="tap">
               <Button
                 type="submit"
                 className="w-full"

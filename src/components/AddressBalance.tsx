@@ -6,7 +6,7 @@ import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
 import { Abi, CONTRACT_ADDRESS } from "@/Abi";
 import { publicClient } from "@/client";
-import { buttonVariants, cardVariants } from "@/utils/animations";
+import { cardVariants } from "@/utils/animations";
 
 const AddressBalance = () => {
   const [address, setAddress] = useState("");
@@ -47,7 +47,7 @@ const AddressBalance = () => {
 
   return (
     <motion.div variants={cardVariants} initial="hidden" animate="visible">
-      <Card className="w-[500px] overflow-hidden">
+      <Card className="overflow-hidden">
         <CardHeader>
           <CardTitle>Token Balance Checker</CardTitle>
         </CardHeader>
@@ -61,7 +61,6 @@ const AddressBalance = () => {
             />
             {inputError && <p className="text-sm text-red-500">{inputError}</p>}
             <motion.div
-              variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
             >
